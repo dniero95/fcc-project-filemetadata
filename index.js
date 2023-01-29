@@ -27,6 +27,17 @@ app.get('/', function (req, res) {
 
 
 app.post('/api/fileanalyse', (req, res) => {
+  // Get the file that was set to our field named "image"
+  const image  = req.files.upfile;
+  // console.log(image);
+  // If no image submitted, exit
+  if (!image) return res.sendStatus(400);
+
+  // If does not have image mime type prevent from uploading
+  // if (/^image/.test(image.mimetype)) return res.sendStatus(400);
+
+  // Move the uploaded image to our upload folder
+  image.mv(__dirname + '/upload/' + image.name);
   res.json(
     {
       name: req.files.upfile.name,
